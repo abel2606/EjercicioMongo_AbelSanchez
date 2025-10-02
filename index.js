@@ -9,13 +9,23 @@ async function main() {
 
     let result = await userdao.crear({ username: 'Abel', email: 'abel@gmail.com' });
     console.log(result);
-    await userdao.crear({ username: 'Abel1', email: 'abel1@gmail.com' });
-    await userdao.crear({ username: 'Abel2', email: 'abel2@gmail.com' });
-    await userdao.crear({ username: 'Abel3', email: 'abel3@gmail.com' });
+    let usuario1 = await userdao.crear({ username: 'Abel1', email: 'abel1@gmail.com' });
+    let usuario2 = await userdao.crear({ username: 'Abel2', email: 'abel2@gmail.com' });
+    let usuario3 = await userdao.crear({ username: 'Abel3', email: 'abel3@gmail.com' });
 
-    let eliminarResp = await userdao.eliminar(result);
+    //let eliminarResp = await userdao.eliminar(result);
+    
+    await userdao.actualizar(usuario1, userdao.crear({ username: 'Juanito', email: 'juan@gmail.com' }));
 
-    await dbs.desconectar();
+    await userdao.actualizar(usuario1, userdao.crear({ username: 'Juanito', email: 'juan@gmail.com' }));
+    
+    const usuarios = await userdao.obtenerTodos();
+
+    usuarios.forEach(usuario => {
+        console.log(usuario._id)
+    });
+
+    dbs.desconectar();
 }
 
 main();
